@@ -1,0 +1,1 @@
+.news-card{display:grid}.news-card__title{grid-row:1;font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1rem}.news-card__content{grid-row:2;overflow:hidden;text-overflow:ellipsis;height:2rem;font-size:.8rem;line-height:1rem}.news-card__image{grid-row:1/span 2;object-fit:cover}

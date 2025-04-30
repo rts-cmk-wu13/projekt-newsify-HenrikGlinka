@@ -1,0 +1,22 @@
+@use "variables" as var
+    
+body
+    font-family: var.$default-font
+
+h1, h2, h3, h4, h5, h6
+    font-family: var.$default-heading-font
+
+button
+    width: 100%
+    padding: 1rem 2rem
+    color: var.$button-color
+    border: 1px solid var.$button-color
+    border-radius: 2rem
+    background-color: transparent
+
+    &.highlight
+        background-color: var.$button-color
+        color: white
+
+#app
+    padding: 1rem
