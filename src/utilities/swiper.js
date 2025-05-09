@@ -11,30 +11,49 @@ const pointer = {
 };
 
 export function addSwipeEvents(element) {
-    element.addEventListener('touchstart', touchStartHandler);
-    element.addEventListener('touchmove', touchMoveHandler);
-    element.addEventListener('touchend', touchEndHandler);
+    element.addEventListener('pointerdown', pointerDownHandler);
+    element.addEventListener('pointermove', pointerMoveHandler);
+    element.addEventListener('pointerup', pointerUpHandler);
+    //element.addEventListener('pointercancel', pointerCancelHandler);
+
+    element.style.touchAction = 'none';
 }
 
-function touchStartHandler(event) {
-    pointer.startX = event.touches[0].clientX;
-    pointer.startY = event.touches[0].clientY;
+function pointerDownHandler(event) {
+    event.target.style.touchAction = 'none';
+    pointer.startX = event.clientX;
+    pointer.startY = event.clientY;
     pointer.timeStamp = event.timeStamp;
     pointer.down = true;
 }
 
-function touchMoveHandler(event) {
+function pointerMoveHandler(event) {
     if (!pointer.down) return;
 
-    pointer.x = event.touches[0].clientX;
-    pointer.y = event.touches[0].clientY;
+    const element = event.currentTarget;
+
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+
+    if (Math.abs(event.movementY) > Math.abs(event.movementX) - MINIMUM_SWIPE_DISTANCE) {
+
+        window.scrollBy(0, -event.movementY);
+    }
+
+    element.dispatchEvent(new CustomEvent('swipemove', { detail: { x: event.movementX, y: event.movementY } }));
 }
 
-function touchEndHandler(event) {
+function pointerUpHandler(event) {
     const element = event.currentTarget;
     const deltaX = pointer.x - pointer.startX;
     const deltaY = pointer.y - pointer.startY;
     const deltaTime = event.timeStamp - pointer.timeStamp;
+
+    console.log('BAM');
+
+    event.target.style.touchAction = '';
+
+    pointer.down = false;
 
     const options = {
         detail: {
@@ -49,9 +68,13 @@ function touchEndHandler(event) {
     if (Math.abs(deltaX) >= MINIMUM_SWIPE_DISTANCE) {
         element.dispatchEvent(new Event(deltaX < 0 ? 'swipeleft' : 'swiperight'));
     }
-    
+
     if (Math.abs(deltaY) >= MINIMUM_SWIPE_DISTANCE) {
         element.dispatchEvent(new Event(deltaY < 0 ? 'swipeup' : 'swipedown'));
-    } 
+    }
+}
+
+function pointerCancelHandler(event) {
+    event.target.style.touchAction = '';
 }
 

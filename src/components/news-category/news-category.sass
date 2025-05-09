@@ -1,0 +1,41 @@
+.news-category
+
+    border: 1px solid #C5C5C5
+    border-width: 1px 0 0 0
+    transition: height .3s ease-in
+    height: 3.5rem
+    overflow: hidden
+    cursor: pointer
+
+    &:last-child
+        border-bottom-width: 1px
+
+    &__summary
+        list-style-type: none
+        text-transform: uppercase
+        display: flex
+        align-items: center
+        padding-block: 1rem
+        font-weight: bold
+        
+        &::before
+            content: ''
+            display: inline-block
+            height: 1.5rem
+            width: 1.5rem
+            background-image: url('/newsify-logo.svg')
+            background-size: contain
+            background-position: center
+            background-repeat: no-repeat
+            margin-inline: 1rem .5rem
+
+        &::after
+            content: url(./chevron-right.svg)
+            height: 1.5rem
+            width: 1.5rem
+            margin-inline: auto 1rem
+            transition: 200ms ease-out
+            transform-origin: center
+
+    &[open] > &__summary::after
+        transform: rotate(90deg)

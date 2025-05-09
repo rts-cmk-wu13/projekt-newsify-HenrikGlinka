@@ -14,6 +14,7 @@ export default defineConfig({
             input: {
                 index: resolve(__dirname, 'index.html'),
                 onboarding: resolve(__dirname, 'onboarding/index.html'),
+                archive: resolve(__dirname, 'archive/index.html'),
             },
         },
     },
