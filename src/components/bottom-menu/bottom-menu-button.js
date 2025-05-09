@@ -17,6 +17,9 @@ export default function ButtomMenuButton(text, url, icon) {
     textElement.textContent = text;
     buttonElement.href = BASE_URL + url;
 
+    console.log(BASE_URL);
+    
+
     buttonElement.append(iconElement, textElement);
 
 
