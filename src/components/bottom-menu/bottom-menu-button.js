@@ -3,6 +3,7 @@ import './bottom-menu-button.sass';
 export default function ButtomMenuButton(text, url, icon) {
 
     const BASE_CLASS = 'bottom-menu-button';
+    const BASE_URL = import.meta.env.BASE_URL;
 
     const buttonElement = document.createElement('a');
     const iconElement = document.createElement('img');
@@ -14,9 +15,9 @@ export default function ButtomMenuButton(text, url, icon) {
 
     iconElement.src = icon;
     textElement.textContent = text;
-    buttonElement.href = import.meta.env.BASE_URL + url;
+    buttonElement.href = BASE_URL + url;
 
-    buttonElement.append(iconElement, textElement)
+    buttonElement.append(iconElement, textElement);
 
 
     return buttonElement;
