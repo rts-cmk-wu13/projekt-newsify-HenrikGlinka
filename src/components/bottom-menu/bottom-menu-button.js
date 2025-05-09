@@ -14,7 +14,7 @@ export default function ButtomMenuButton(text, url, icon) {
 
     iconElement.src = icon;
     textElement.textContent = text;
-    buttonElement.href = url;
+    buttonElement.href = import.meta.env.BASE_URL + url;
 
     buttonElement.append(iconElement, textElement)
 

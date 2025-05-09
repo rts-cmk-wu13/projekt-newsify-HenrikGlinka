@@ -15,9 +15,9 @@ export function addSwipeEvents(element) {
     element.addEventListener('pointerdown', pointerDownHandler);
     element.addEventListener('pointermove', pointerMoveHandler);
     element.addEventListener('pointerup', pointerUpHandler);
-    //element.addEventListener('pointercancel', pointerCancelHandler);
+    //element.addEventListener('pointercancel', pointerUpHandler);
 
-    element.style.touchAction = 'none';
+    element.style.touchAction = 'pan-y';
 }
 
 function pointerDownHandler(event) {
@@ -38,9 +38,7 @@ function pointerMoveHandler(event) {
 
     if (pointer.scrolling === null) pointer.scrolling = Math.abs(event.movementY) > Math.abs(event.movementX);
 
-    if (pointer.scrolling) {
-        window.scrollBy(0, -event.movementY);
-    } else {
+    if (!pointer.scrolling) {
         element.dispatchEvent(new CustomEvent('swipemove', { detail: { x: event.movementX, y: event.movementY } }));
     }
 }
