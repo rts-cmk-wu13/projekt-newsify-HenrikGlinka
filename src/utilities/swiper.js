@@ -6,8 +6,9 @@ const pointer = {
     y: null,
     startX: null,
     startY: null,
+    scrolling: null,
     timeStamp: 0,
-    down: false
+    down: false,
 };
 
 export function addSwipeEvents(element) {
@@ -35,12 +36,13 @@ function pointerMoveHandler(event) {
     pointer.x = event.clientX;
     pointer.y = event.clientY;
 
-    if (Math.abs(event.movementY) > Math.abs(event.movementX) - MINIMUM_SWIPE_DISTANCE) {
+    if (pointer.scrolling === null) pointer.scrolling = Math.abs(event.movementY) > Math.abs(event.movementX);
 
+    if (pointer.scrolling) {
         window.scrollBy(0, -event.movementY);
+    } else {
+        element.dispatchEvent(new CustomEvent('swipemove', { detail: { x: event.movementX, y: event.movementY } }));
     }
-
-    element.dispatchEvent(new CustomEvent('swipemove', { detail: { x: event.movementX, y: event.movementY } }));
 }
 
 function pointerUpHandler(event) {
@@ -49,11 +51,7 @@ function pointerUpHandler(event) {
     const deltaY = pointer.y - pointer.startY;
     const deltaTime = event.timeStamp - pointer.timeStamp;
 
-    console.log('BAM');
-
     event.target.style.touchAction = '';
-
-    pointer.down = false;
 
     const options = {
         detail: {
@@ -72,9 +70,12 @@ function pointerUpHandler(event) {
     if (Math.abs(deltaY) >= MINIMUM_SWIPE_DISTANCE) {
         element.dispatchEvent(new Event(deltaY < 0 ? 'swipeup' : 'swipedown'));
     }
-}
 
-function pointerCancelHandler(event) {
-    event.target.style.touchAction = '';
+    pointer.x = null;
+    pointer.y = null;
+    pointer.startX = null;
+    pointer.startY = null;
+    pointer.scrolling = null;
+    pointer.timeStamp = 0;
+    pointer.down = false;
 }
-
