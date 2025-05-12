@@ -28,7 +28,7 @@ app.append(
     LogoHeader('Newsify', logoImage, searchbox),
     newsContainer,
     BottomMenu(
-        BottomMenuButton('Home', '', homeIcon),
+        BottomMenuButton('Home', '/', homeIcon, true),
         BottomMenuButton('Archive', 'archive/', archiveIcon),
         BottomMenuButton('Popular', 'popular/', popularIcon),
         BottomMenuButton('Settings', 'settings/', settingsIcon),
