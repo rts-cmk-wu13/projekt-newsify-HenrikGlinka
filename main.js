@@ -12,15 +12,17 @@ import archiveIcon from './src/assets/images/ui/icons/archive.svg';
 import popularIcon from './src/assets/images/ui/icons/popular.svg';
 import settingsIcon from './src/assets/images/ui/icons/settings.svg';
 
-import { getMostPopular } from './src/utilities/new-york-times-api';
+import { getTopStories } from './src/utilities/new-york-times-api';
+import { categoryIsHidden } from './src/utilities/settings';
+
+if (localStorage.getItem('skipOnboarding') !== 'true') location.href = './onboarding/';
 
 const app = document.querySelector('#app');
 const newsContainer = document.createElement('div');
 
-const newsData = await getMostPopular('viewed', 7);
+const newsData = (await getTopStories()).filter(article => !categoryIsHidden(article.section));
 
 console.log(newsData);
-
 
 const searchbox = SearchBox();
 
@@ -55,12 +57,15 @@ function updateNews(articles) {
     const categories = articles.map(article => article.section);
     const uniqueCategories = [...new Set(categories)].sort();
 
+    if (uniqueCategories.length > 0)
     uniqueCategories.forEach(category => {
         const categoryArticles = articles.filter(article => article.section === category);
         const newsCards = categoryArticles.map(article => NewsCard(article))
 
         newsContainer.append(NewsCategory(category, newsCards));
     });
+
+
 }
 
 updateNews(newsData);

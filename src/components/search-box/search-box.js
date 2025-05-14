@@ -13,6 +13,9 @@ export default function SearchBox() {
     searchInput.type = 'search';
     searchInput.placeholder = 'Search news';
 
+    searchInput.addEventListener('input', () => containerElement.dataset.value = searchInput.value);
+    containerElement.addEventListener('submit', event => event.preventDefault());
+
     containerElement.append(searchInput);
 
     return containerElement;

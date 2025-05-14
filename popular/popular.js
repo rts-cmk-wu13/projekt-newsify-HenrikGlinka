@@ -1,5 +1,6 @@
 import '../src/styles/style.sass';
 import LogoHeader from '../src/components/logo-header/logo-header';
+import SearchBox from '../src/components/search-box/search-box';
 import NewsCard from '../src/components/news-card/news-card';
 import NewsCategory from '../src/components/news-category/news-category';
 import BottomMenu from '../src/components/bottom-menu/bottom-menu';
@@ -11,13 +12,17 @@ import archiveIcon from '../src/assets/images/ui/icons/archive.svg';
 import popularIcon from '../src/assets/images/ui/icons/popular.svg';
 import settingsIcon from '../src/assets/images/ui/icons/settings.svg';
 
-import { getArchive } from '../src/utilities/archive';
-import SearchBox from '../src/components/search-box/search-box';
+import { getMostPopular } from '../src/utilities/new-york-times-api';
+
+if (localStorage.getItem('skipOnboarding') !== 'true') location.href = './onboarding/';
 
 const app = document.querySelector('#app');
 const newsContainer = document.createElement('div');
 
-const newsData = Object.values(getArchive());
+const newsData = await getMostPopular('viewed', 7);
+
+console.log(newsData);
+
 const searchbox = SearchBox();
 
 app.append(
@@ -25,8 +30,8 @@ app.append(
     newsContainer,
     BottomMenu(
         BottomMenuButton('Home', '../', homeIcon),
-        BottomMenuButton('Archive', '../archive/', archiveIcon, true),
-        BottomMenuButton('Popular', '../popular/', popularIcon),
+        BottomMenuButton('Archive', '../archive/', archiveIcon),
+        BottomMenuButton('Popular', '../popular/', popularIcon, true),
         BottomMenuButton('Settings', '../settings/', settingsIcon),
     )
 )
@@ -45,36 +50,21 @@ searchbox.addEventListener('input', event => {
     updateNews(filteredData);
 })
 
-
-
 function updateNews(articles) {
-
     newsContainer.innerHTML = '';
 
     const categories = articles.map(article => article.section);
     const uniqueCategories = [...new Set(categories)].sort();
 
+    if (uniqueCategories.length > 0)
     uniqueCategories.forEach(category => {
         const categoryArticles = articles.filter(article => article.section === category);
-        const newsCards = categoryArticles.map(article => NewsCard(article, true));
-
-        newsCards.forEach(card => card.addEventListener('removed', () => {
-            const parent = card.parentElement;
-
-            card.remove();
-
-            if (parent.children.length === 1) parent.remove();
-        }));
+        const newsCards = categoryArticles.map(article => NewsCard(article))
 
         newsContainer.append(NewsCategory(category, newsCards));
     });
 
-    if (newsContainer.innerHTML === '') {
-        const isSearching = searchbox?.dataset?.value?.length > 0 ?? false;
-        const message = isSearching ? 'No search results found.' : 'The archive is empty.'
-        
-        newsContainer.innerHTML = /* html */ `<p style="text-align:center; margin-top:2rem;">${message}</p>`;
-    }
+
 }
 
 updateNews(newsData);

@@ -27,9 +27,9 @@ export default function NewsCategory(title, articles) {
 
             updateHeight();
 
-            for (let instance of otherInstances) {
-                if (instance !== detailsElement) instance.open = false;
-            }
+            otherInstances.forEach(instance => instance.open = instance === detailsElement);
+            
+
         } else {
             detailsElement.style.height = '';
         }

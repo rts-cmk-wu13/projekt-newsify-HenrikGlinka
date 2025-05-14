@@ -1,0 +1,52 @@
+.switch-button
+    display: flex
+    justify-content: space-between
+    align-items: center
+    position: relative
+    padding-inline: 1rem
+    color: #d9d9d9
+    text-transform: uppercase
+    min-height: 3.5rem
+    border: 0 solid #C5C5C5
+    border-bottom-width: 1px
+    z-index: 0
+
+    &:first-of-type
+        border-top-width: 1px
+
+    &:has(input:checked)
+        color: inherit
+
+    &::before
+        content: ''
+        border: 2px solid
+        color: #d9d9d9
+        background-color: #d9d9d9
+        border-radius: 2rem
+        width: 3rem
+        height: 1.5rem
+        position: absolute
+        right: 1rem
+        transition: all .3s ease-out
+        order: 1
+    
+    &:has(input:checked)::before
+        color: #4d861f
+        background-color: #4d861f
+
+    &::after
+        content: ''
+        display: block
+        position: absolute
+        right: 2.6rem
+        width: 1.5rem
+        height: 1.5rem
+        border-radius: 100%
+        background-color: white
+        transition: right .2s ease-out
+
+    &:has(input:checked)::after
+        right: 1.1rem
+
+    &__checkbox
+        display: none

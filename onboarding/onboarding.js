@@ -6,6 +6,8 @@ import slideImage2 from '../src/assets/images/onboarding/slide2.png';
 import slideImage3 from '../src/assets/images/onboarding/slide3.png';
 import { addSwipeEvents } from '../src/utilities/swiper';
 
+if (localStorage.getItem('skipOnboarding') === 'true') location.href = '../';
+
 
 const app = document.querySelector('#app');
 
@@ -41,10 +43,14 @@ continueButton.innerText = 'Continue';
 
 continueButton.classList.add('highlight')
 continueButton.addEventListener('click', () => {
-    if (!slider.next()) location.href = '/';
+    localStorage.setItem('skipOnboarding', 'true');
+    if (!slider.next()) location.href = '../';
 });
 
-skipButton.addEventListener('click', () => location.href = '/');
+skipButton.addEventListener('click', () => {
+    localStorage.setItem('skipOnboarding', 'true');
+    location.href = '../';
+});
 
 app.append(slider, skipButton, continueButton);
 

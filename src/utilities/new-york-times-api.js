@@ -12,6 +12,12 @@ export async function getMostPopular(endpoint, days) {
         return fetchData(url);
 }
 
+export async function getTopStories() {
+    const url = new URL('topstories/v2/home.json', BASE_URL);
+
+        return fetchData(url);
+}
+
 export async function arcticleSearch(query, filter) {
     const url = new URL(`search/v2/articlesearch.json`, BASE_URL);
 
@@ -19,6 +25,7 @@ export async function arcticleSearch(query, filter) {
 
     return fetchData(url)
 }
+
 
 
 async function fetchData(url, ttl = FIVE_MINUTES) {

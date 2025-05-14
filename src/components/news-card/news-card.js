@@ -13,7 +13,7 @@ export default function NewsCard(article, buttonTypeDelete = false) {
 
     const articleTitle = article.title;
     const articleContent = article.abstract;
-    const articleImageUrl = article.media[0]?.['media-metadata'][0].url;
+    const articleImageUrl = article?.media?.[0]?.['media-metadata']?.[0]?.url ?? article?.multimedia?.[0]?.url;
     const articleUrl = article.url;
 
     const containerElement = document.createElement('div');
