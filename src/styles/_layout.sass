@@ -2,13 +2,31 @@
     
 body
     font-family: var.$default-font
-    color: var.$default-text-color
+    color: var.$default-background-color
+    background-color: var.$default-background-color
+
+    &.dark-mode
+        color: var.$dark-mode-background-color
+        background-color: var.$dark-mode-background-color
 
 h1, h2, h3, h4, h5, h6, summary
     font-family: var.$default-heading-font
+    color: var.$default-text-color
     font-weight: 900
 
+.dark-mode 
+    h1, h2, h3, h4, h5, h6, summary
+        color: var.$dark-mode-text-color
+
+span, p, a
+    color: var.$default-text-color
+
+.dark-mode 
+    span, p, a
+        color: var.$dark-mode-text-color
+
 button
+    margin: 1rem
     padding: 1rem 2rem
     color: var.$button-color
     border: 1px solid var.$button-color
@@ -21,17 +39,18 @@ button
         color: white
 
 input
-    font-family: var.$default-font
+    background-color: var.$default-input-color
 
 label
     font-family: var.$default-heading-font
-    font-weight: 900
+    font-weight: bold
 
 #app
     display: flex
     flex-direction: column
     justify-content: space-between
     min-height: 100vh
+    background-color: inherit
 
     > h1, > h2
         font-family: var.$default-font

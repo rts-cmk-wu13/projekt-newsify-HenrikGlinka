@@ -1,5 +1,12 @@
+/*
+    There is no official endpoint for categories. These are stolen from:
+    https://developer.nytimes.com/docs/top-stories-product/1/routes/%7Bsection%7D.json/get
+
+    - Henrik
+*/
+
 export const getSettings = () => JSON.parse(localStorage.getItem('settings')) ?? {
-    categories: [
+    categories: [ 
         { name: 'arts', hidden: false },
         { name: 'automobiles', hidden: false },
         { name: 'books', hidden: false },
@@ -21,6 +28,7 @@ export const getSettings = () => JSON.parse(localStorage.getItem('settings')) ??
         { name: 'realestate', hidden: false },
         { name: 'science', hidden: false },
         { name: 'sports', hidden: false },
+        { name: 'style', hidden: false },
         { name: 'sundayreview', hidden: false },
         { name: 'technology', hidden: false },
         { name: 'theater', hidden: false },
@@ -42,4 +50,24 @@ export const categoryIsHidden = categoryName => {
     if (settings?.categories === undefined) return false;
 
     return settings.categories.find(category => category.name === categoryName)?.hidden ?? false;
+}
+
+export const isDarkMode = () => getSettings().darkMode;
+
+export const toggleDarkMode = () => {
+    const currentSettings = getSettings();
+
+    if (!currentSettings.darkMode) {
+        currentSettings.darkMode = true;
+        document.body.classList.add('dark-mode');
+    } else {
+        currentSettings.darkMode = false;
+        document.body.classList.remove('dark-mode');
+    }
+
+    setSettings(currentSettings);
+}
+
+export const initializeDarkMode = () => {
+    if (isDarkMode()) document.body.classList.add('dark-mode');
 }

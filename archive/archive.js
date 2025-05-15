@@ -6,13 +6,16 @@ import BottomMenu from '../src/components/bottom-menu/bottom-menu';
 import BottomMenuButton from '../src/components/bottom-menu/bottom-menu-button';
 
 import logoImage from '../src/assets/images/ui/newsify-logo.svg';
-import homeIcon from '../src/assets/images/ui/icons/home.svg';
-import archiveIcon from '../src/assets/images/ui/icons/archive.svg';
-import popularIcon from '../src/assets/images/ui/icons/popular.svg';
-import settingsIcon from '../src/assets/images/ui/icons/settings.svg';
+import homeIcon from '../src/assets/images/ui/icons/home.svg?raw';
+import archiveIcon from '../src/assets/images/ui/icons/archive.svg?raw';
+import popularIcon from '../src/assets/images/ui/icons/popular.svg?raw';
+import settingsIcon from '../src/assets/images/ui/icons/settings.svg?raw';
 
 import { getArchive } from '../src/utilities/archive';
 import SearchBox from '../src/components/search-box/search-box';
+import { initializeDarkMode } from '../src/utilities/settings-manager';
+
+initializeDarkMode();
 
 const app = document.querySelector('#app');
 const newsContainer = document.createElement('div');
