@@ -19,6 +19,7 @@ const app = document.querySelector('#app');
 const settingContainer = document.createElement('div');
 const primaryHeading = document.createElement('h1');
 const darkmodeButton = document.createElement('button');
+const onboardingButton = document.createElement('button');
 
 const settings = getSettings();
 
@@ -26,6 +27,7 @@ const switchButtons = settings.categories.map(category => SwtichButton(category.
 
 primaryHeading.textContent = 'Settings';
 darkmodeButton.textContent = 'Toggle dark mode'
+onboardingButton.textContent = 'Show onboarding'
 
 switchButtons.forEach(switchButton => switchButton.addEventListener('change', event => {
     const setting = settings.categories.find(category => category.name === switchButton.textContent);
@@ -38,6 +40,10 @@ switchButtons.forEach(switchButton => switchButton.addEventListener('change', ev
 }));
 
 darkmodeButton.addEventListener('click', toggleDarkMode);
+onboardingButton.addEventListener('click', () => {
+    localStorage.removeItem('skipOnboarding');
+    location.href = '../onboarding/';
+});
 
 app.append(
     LogoHeader('Newsify', logoImage),
@@ -45,6 +51,7 @@ app.append(
     settingContainer,
     NewsCategory('Categories', switchButtons),
     darkmodeButton,
+    onboardingButton,
     BottomMenu(
         BottomMenuButton('Home', '../', homeIcon),
         BottomMenuButton('Archive', '../archive/', archiveIcon),
